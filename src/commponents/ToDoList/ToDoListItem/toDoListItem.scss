@@ -1,0 +1,22 @@
+.Todo-list-item {
+  border: 1.5px solid #ccc;
+  font-size: 1.2rem;
+  color: #5f6368;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 3px 2px #eee;
+  transform: translateX(80px);
+  opacity: 0;
+  transition: all .2s ease-in;
+
+  &_done {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+
+  pre {
+    margin: 0;
+    white-space: pre-wrap;
+  }
+}

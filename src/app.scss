@@ -1,0 +1,46 @@
+.App {
+  overflow-x: hidden;
+
+  // Свайп влево
+
+  .swipe-left-enter {
+    transform: translateX(100%);
+  }
+
+  .swipe-left-exit {
+    transform: translateX(0%);
+  }
+
+  .swipe-left-enter-active {
+    position: fixed;
+    transform: translateX(0%);
+    transition: transform 300ms;
+  }
+
+  .swipe-left-exit-active {
+    transform: translateX(-100%);
+    transition: transform 300ms;
+  }
+
+  // Свайп вправо
+
+  .swipe-right-enter {
+    transform: translateX(-100%);
+  }
+
+  .swipe-right-exit {
+    transform: translateX(0%);
+  }
+
+  .swipe-right-enter-active {
+    transform: translateX(0%);
+    transition: transform 300ms;
+  }
+
+  .swipe-right-exit-active {
+    position: fixed;
+    top: 0;
+    transform: translateX(100%);
+    transition: transform 300ms;
+  }
+}

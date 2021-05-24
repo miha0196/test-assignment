@@ -1,0 +1,27 @@
+.Add-todo {
+  margin-bottom: 15px;
+
+  &__form {
+    display: flex;
+  }
+
+  &__input {
+    width: 70%;
+    font-size: 1.2rem;
+    border-radius: 5px 0 0 5px;
+    border: 1.5px solid #ccc;
+    border-right: none;
+    padding: 5px;
+    resize: none;
+  }
+  
+  &__btn {
+    font-size: 16px;
+    background-color: #1a73e8;
+    color: white;
+    width: 30%;
+    border: 1.5px solid #ccc;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+  }
+}
