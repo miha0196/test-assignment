@@ -19,13 +19,8 @@ const App: React.FC = () => {
   const scrollOffset = useRef(0);
   const curX = useRef(0);
 
-  const touchStartHandler: {(event: TouchEvent): void} = useCallback((event) => {
-    curX.current = event.changedTouches[0].pageX
-  }, [])
-
-  const touchEndHandler: {(event: TouchEvent): void} = useCallback((event) => {
-      
-    if (curX.current - event.changedTouches[0].pageX > document.documentElement.scrollWidth / 4) {
+  const changePage = useCallback((startCoord, endCoord) => {
+    if (startCoord - endCoord > document.documentElement.scrollWidth / 4) {
       if (history.location.pathname === '/clock') return
 
       scrollOffset.current = window.pageYOffset;
@@ -33,7 +28,7 @@ const App: React.FC = () => {
       history.push('/clock')
     }
     
-    if (event.changedTouches[0].pageX - curX.current > document.documentElement.scrollWidth / 4) {
+    if (endCoord - startCoord > document.documentElement.scrollWidth / 4) {
       if (history.location.pathname === '/') return
 
       setSwipeDirection('right')
@@ -41,15 +36,35 @@ const App: React.FC = () => {
     }
   }, [history])
 
+  const touchStartHandler: {(event: TouchEvent): void} = useCallback((event) => {
+    curX.current = event.changedTouches[0].pageX
+  }, [])
+
+  const mouseDownHandler: {(event: MouseEvent): void} = useCallback((event) => {
+    curX.current = event.clientX
+  }, [])
+
+  const mouseUpHandler: {(event: MouseEvent): void} = useCallback((event) => {
+    changePage(curX.current, event.clientX)
+  }, [changePage])
+
+  const touchEndHandler: {(event: TouchEvent): void} = useCallback((event) => {
+    changePage(curX.current, event.changedTouches[0].pageX)
+  }, [changePage])
+
   useEffect(() => {    
-    window.addEventListener('touchstart', touchStartHandler)
-    window.addEventListener('touchend', touchEndHandler)
+    window.addEventListener('touchstart', touchStartHandler);
+    window.addEventListener('touchend', touchEndHandler);
+    window.addEventListener('mousedown', mouseDownHandler)
+    window.addEventListener('mouseup', mouseUpHandler)
     
     return () => {
       window.removeEventListener('touchstart', touchStartHandler)
       window.removeEventListener('touchstart', touchEndHandler)
+      window.addEventListener('mousedown', mouseDownHandler)
+      window.addEventListener('mouseup', mouseUpHandler)
     }
-  }, [touchStartHandler, touchEndHandler])
+  }, [touchStartHandler, touchEndHandler, mouseDownHandler, mouseUpHandler])
   
   return (
     <div className='App'>
